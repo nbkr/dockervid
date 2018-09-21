@@ -93,13 +93,13 @@ C16="\[\033[1;37m\]"    # white (bold)
 
 
 hostcolor="${C07}"
-usercolor="${C03}"
-rootcolor="${C05}"
+usercolor="${C05}"
+rootcolor="${C03}"
 normalcolor="${C00}"
 hostname="{{ inventory_hostname | replace('docker-', '') }}"
 
 if [ "`id -u`" -eq 0 ]; then
     PS1="> ${rootcolor}\u${normalcolor}@${hostcolor}${hostname}${normalcolor}:\w # "
 else
-    PS1="> ${rootcolor}\u${normalcolor}@${hostcolor}${hostname}${normalcolor}:\w $ "
+    PS1="> ${usercolor}\u${normalcolor}@${hostcolor}${hostname}${normalcolor}:\w $ "
 fi
