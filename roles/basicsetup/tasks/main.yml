@@ -1,0 +1,39 @@
+- raw: "apt-get update; apt-get install -y python"
+
+- name: "Copying BashRC"
+  template:
+    src: ../files/bashrc
+    dest: /etc/bash.bashrc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Removing Roots BashRC"
+  file:
+    path: /root/.bashrc
+    state: absent
+
+- name: "Removing bashrc in /etc/skel"
+  file:
+    path: /etc/skel/.bashrc
+    state: absent
+
+- name: "Adding Group Ben"
+  group:
+    name: ben
+
+- name: "Adding User Ben"
+  user:
+    name: ben
+    home: /home/ben
+    group: ben
+    password: "{{ _password | password_hash('sha512') }}"
+    groups: ['sudo']
+    shell: /bin/bash
+    create_home: yes
+
+- name: "Adding Ben's SSH Key"
+  authorized_key:
+    user: ben
+    state: present
+    key: "{{ lookup('file', _sshkeyfile) }}"
