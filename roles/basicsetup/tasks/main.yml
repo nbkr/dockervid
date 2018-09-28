@@ -37,3 +37,47 @@
     user: ben
     state: present
     key: "{{ lookup('file', _sshkeyfile) }}"
+
+
+- name: "Installing figlet"
+  apt:
+    name: figlet
+
+# The message of the day puts out much data, which doesn't really help, so let's get rid
+# of it and replace it with a banner so that the viewers can easily see on what server we are.
+#- name: "Disableing the default Message of the day"
+#  shell: chmod -R 0644 /etc/update-motd.d/*
+- name: "Disableing the default Message of the day"
+  file:
+    path: /etc/update-motd.d/
+    owner: root
+    group: root
+    mode: 0644
+    recurse: yes
+
+- name: "Setting the correct rights for the folder itself."
+  file:
+    path: /etc/update-motd.d/
+    owner: root
+    group: root
+    mode: 0755
+    
+- name: "Copying Banner file over"
+  copy:
+    src: ../files/systembanner.sh
+    dest: /etc/update-motd.d/999-systembanner
+    owner: root
+    group: root
+    mode: 0755
+
+# The default sshd shows the last login of a user inkl. the IP. Again not usefull information
+# for the viewers. So I'll remove that by disableing PrintLastLogin in sshd_config
+- name: "Copying SSHD config over"
+  copy:
+    src: ../files/sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - restart-ssh
