@@ -22,5 +22,6 @@ Host docker-production
 ```
 
 ```shell
+cd ./ansible
 ansible-playbook -u root -e '_password=<password_of_bens_account>' -e '_sshkeyfile=/home/youruser/.ssh/id_rsa.pub' p_basicsetup.yml
 ```
