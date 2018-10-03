@@ -55,6 +55,11 @@
     mode: 0644
     recurse: yes
 
+- name: "Removing 50-landscape-sysinfo as it is a symlink and chmod 0644 isn't enough"
+  file:
+    path: /etc/update-motd.d/50-landscape-sysinfo
+    state: absent
+
 - name: "Setting the correct rights for the folder itself."
   file:
     path: /etc/update-motd.d/
@@ -81,3 +86,22 @@
     mode: 0644
   notify:
   - restart-ssh
+
+# With the zoom level I'm using in the videos I sometimes end up with line breaks. To make them
+# better readalbe without annoyingly zooming in and out, I've written a small python script that
+# highlights the lines.
+- name: "Copying highligther Script"
+  copy:
+    src: ../files/highlighter.py
+    dest: /bin/highlighter
+    owner: root
+    group: root
+    mode: 0755
+
+- name: "Copying vimrc"
+  copy:
+    src: ../files/vimrc.local
+    dest: /etc/vim/vimrc.local
+    owner: root
+    group: root
+    mode: 0644

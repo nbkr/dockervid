@@ -1,0 +1,31 @@
+set number
+set bg=dark
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set nocompatible
+set noswapfile
+set nobk
+set nohlsearch
+set incsearch
+set nowritebackup
+set wrap!
+set hid 
+set smartindent
+set foldmethod=marker
+set modeline
+set modelines=5
+set sc
+set encoding=UTF-8
+set nospell
+syn on
+
+"See help: smartindent for explanation
+" CTRL-V CTRL-H  = ^H
+inoremap # X#
+
+"Makefiles need tabs
+autocmd FileType make setlocal noexpandtab
+
+let g:GPGPreferArmor=1
+
