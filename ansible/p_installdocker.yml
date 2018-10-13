@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: docker-development:docker-production
   become: yes
   roles:
   - docker
