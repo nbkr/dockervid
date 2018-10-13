@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - apt:
+      name: nfs-common
+
+- hosts: docker-nfs
+  become: yes
+  roles:
+  - nfsserver

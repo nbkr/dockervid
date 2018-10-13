@@ -1,0 +1,6 @@
+# Don't do this in a productive environment!
+# no_root_squash as well as no_subtree_check
+# might cause trouble. It's fine for the
+# purpose of the Docker videos, but probably not
+# for productive use!
+/opt       {{ hostvars['docker-development']['ansible_default_ipv4']['address'] }}(rw,async,no_root_squash,no_subtree_check) {{ hostvars['docker-production']['ansible_default_ipv4']['address'] }}(rw,async,no_root_squash,no_subtree_check)

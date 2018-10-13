@@ -1,6 +1,6 @@
-FROM quoteserver
+FROM centos:latest
 
-COPY run.sh /
-RUN chmod 0755 /run.sh
+RUN yum install -y httpd php
+COPY quoteshow.php /var/www/html/index.php
 
-CMD /run.sh
+RUN apachectl -DFOREGROUND

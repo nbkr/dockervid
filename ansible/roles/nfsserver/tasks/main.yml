@@ -1,0 +1,22 @@
+- name: "Installing necessary NFS packages"
+  apt:
+    name: "{{ item }}"
+  with_items:
+  - nfs-kernel-server
+
+- name: "Changing permissions of /opt for nfs export"
+  file:
+    path: /opt
+    owner: root
+    group: root
+    mode: 0777
+
+- name: "Setting exports"
+  template:
+    src: ../files/exports
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - exportfs
