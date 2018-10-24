@@ -2,26 +2,8 @@
   apt:
     name: "{{ item }}"
   with_items:
-  - nfs-kernel-server
+  - nfs-common
   - iptables-persistent
-
-- name: "Changing permissions of /shared for nfs export"
-  file:
-    state: directory
-    path: /shared
-    owner: root
-    group: root
-    mode: 0777
-
-- name: "Setting exports"
-  template:
-    src: ../files/exports
-    dest: /etc/exports
-    owner: root
-    group: root
-    mode: 0644
-  notify:
-  - exportfs
 
 # rpcbind shouldn't be exposed to the whole internet.
 - name: "Setting Firewall Rules, rpcbind, allow the docker servers"
@@ -29,11 +11,10 @@
     chain: INPUT
     source: "{{ item }}"
     destination_port: 111
-    jump: ACCEPT
     protocol: tcp
+    jump: ACCEPT
   with_items:
-  - "{{ hostvars['docker-development']['ansible_default_ipv4']['address'] }}"
-  - "{{ hostvars['docker-production']['ansible_default_ipv4']['address'] }}"
+  - "{{ hostvars['docker-nfs']['ansible_default_ipv4']['address'] }}"
   notify:
   - iptables-save
 
@@ -41,10 +22,11 @@
   iptables:
     chain: INPUT
     destination_port: 111
-    jump: REJECT
     protocol: tcp
+    jump: REJECT
   notify:
   - iptables-save
+
 
 - name: "Setting IPv6 Firewall Rules, rpcbind, allow the docker servers"
   iptables:
@@ -52,11 +34,10 @@
     source: "{{ item }}"
     destination_port: 111
     jump: ACCEPT
-    ip_version: ipv6
     protocol: tcp
+    ip_version: ipv6
   with_items:
-  - "{{ hostvars['docker-development']['ansible_default_ipv6']['address'] }}"
-  - "{{ hostvars['docker-production']['ansible_default_ipv6']['address'] }}"
+  - "{{ hostvars['docker-nfs']['ansible_default_ipv6']['address'] }}"
   notify:
   - iptables-save
 
@@ -78,31 +59,30 @@
     protocol: udp
     jump: ACCEPT
   with_items:
-  - "{{ hostvars['docker-development']['ansible_default_ipv4']['address'] }}"
-  - "{{ hostvars['docker-production']['ansible_default_ipv4']['address'] }}"
+  - "{{ hostvars['docker-nfs']['ansible_default_ipv4']['address'] }}"
   notify:
   - iptables-save
 
 - name: "Setting Firewall Rules, rpcbind, reject the rest."
   iptables:
     chain: INPUT
-    destination_port: 111
     protocol: udp
+    destination_port: 111
     jump: REJECT
   notify:
   - iptables-save
+
 
 - name: "Setting IPv6 Firewall Rules, rpcbind, allow the docker servers"
   iptables:
     chain: INPUT
     source: "{{ item }}"
-    protocol: udp
     destination_port: 111
+    protocol: udp
     jump: ACCEPT
     ip_version: ipv6
   with_items:
-  - "{{ hostvars['docker-development']['ansible_default_ipv6']['address'] }}"
-  - "{{ hostvars['docker-production']['ansible_default_ipv6']['address'] }}"
+  - "{{ hostvars['docker-nfs']['ansible_default_ipv6']['address'] }}"
   notify:
   - iptables-save
 
@@ -110,8 +90,8 @@
   iptables:
     chain: INPUT
     destination_port: 111
-    protocol: udp
     jump: REJECT
+    protocol: udp
     ip_version: ipv6
   notify:
   - iptables-save

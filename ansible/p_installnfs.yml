@@ -1,8 +1,12 @@
 ---
 - hosts: all
   tasks:
-  - apt:
-      name: nfs-common
+  - setup:
+
+- hosts: docker-development:docker-production
+  become: yes
+  roles:
+  - nfsclient
 
 - hosts: docker-nfs
   become: yes

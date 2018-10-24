@@ -1,5 +1,2 @@
-- name: exportfs
-  shell: exportfs -ar
-
 - name: iptables-save
   shell: iptables-save > /etc/iptables/rules.v4 && ip6tables-save > /etc/iptables/rules.v6
