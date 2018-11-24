@@ -3,7 +3,7 @@
   tasks:
   - setup:
 
-- hosts: docker-development:docker-production
+- hosts: docker-development:docker-production:docker-registry
   become: yes
   roles:
   - nfsclient

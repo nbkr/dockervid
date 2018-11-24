@@ -1,0 +1,2 @@
+letsencrypt_mail: me@example.com
+registry_domain: my.registry.example.com

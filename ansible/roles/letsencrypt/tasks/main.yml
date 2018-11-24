@@ -1,0 +1,10 @@
+- name: "Installing packages for letsencrypt"
+  apt:
+    name: "{{ item }}"
+  with_items:
+  - certbot
+
+- name: "Creating letsencrypt certificate"
+  shell: certbot certonly -n -d {{ registry_domain }} --agree-tos --standalone -m {{ letsencrypt_mail }}
+  args:
+    creates: /etc/letsencrypt/live/{{ registry_domain }}/
