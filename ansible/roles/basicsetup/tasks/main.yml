@@ -18,26 +18,6 @@
     path: /etc/skel/.bashrc
     state: absent
 
-- name: "Adding Group Ben"
-  group:
-    name: ben
-
-- name: "Adding User Ben"
-  user:
-    name: ben
-    home: /home/ben
-    group: ben
-    password: "{{ _password | password_hash('sha512') }}"
-    groups: ['sudo']
-    shell: /bin/bash
-    create_home: yes
-
-- name: "Adding Ben's SSH Key"
-  authorized_key:
-    user: ben
-    state: present
-    key: "{{ lookup('file', _sshkeyfile) }}"
-
 
 - name: "Installing figlet"
   apt:
