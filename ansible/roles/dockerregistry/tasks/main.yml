@@ -1,0 +1,50 @@
+- name: "Installing some tools I need "
+  apt:
+    name: "{{ item }}"
+  with_items:
+  - python-pip
+  - python-setuptools
+
+- name: "Installing some more tools I need"
+  pip:
+    name: "{{ item }}"
+  with_items:
+  - docker-py
+ 
+- name: "Creating folders for the config files."
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+  - /etc/dockerregistry
+  - /etc/dockerregistry/auth
+
+- name: "Copying htpasswd file"
+  template:
+    src: ../files/htpasswd
+    dest: /etc/dockerregistry/auth/htpasswd
+    owner: root
+    group: root
+    mode: 0644
+
+# TODO: The certificate changes it's name if letsencrypt renews it.
+- name: "Starting our own registry"
+  docker_container:
+    name: b1tregistry
+    image: registry:2
+    ports:
+    - "443:5000"
+    env:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_HTTP_HOST: "https://{{ registry_domain }}"
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/fullchain1.pem
+      REGISTRY_HTTP_TLS_KEY: /certs/privkey1.pem
+    volumes:
+    - /mnt:/var/lib/registry
+    - /etc/dockerregistry/auth:/auth
+    - /etc/letsencrypt/archive/{{ registry_domain }}:/certs

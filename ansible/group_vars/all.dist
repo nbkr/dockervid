@@ -1,2 +1,3 @@
 letsencrypt_mail: me@example.com
 registry_domain: my.registry.example.com
+registry_password: hash_of_your_htpasswd_password
