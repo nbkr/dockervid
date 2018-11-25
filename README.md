@@ -28,11 +28,11 @@ Host docker-nfs
 
 ```shell
 cd ./ansible
-ansible-playbook -u root -e '_password=<password_of_bens_account>' -e '_sshkeyfile=/home/youruser/.ssh/id_rsa.pub' p_basicsetup.yml
+ansible-playbook p_basicsetup.yml
 ```
 
 You can then install docker and nfs on the hosts via
 ```
-ansible-playbook -u root p_installdocker.yml
-ansible-playbook -u root p_installnfs.yml
+ansible-playbook p_installdocker.yml
+ansible-playbook p_installnfs.yml
 ```
