@@ -30,7 +30,6 @@
     group: root
     mode: 0644
 
-# TODO: The certificate changes it's name if letsencrypt renews it.
 - name: "Starting our own registry"
   docker_container:
     name: b1tregistry
@@ -42,9 +41,9 @@
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
       REGISTRY_HTTP_HOST: "https://{{ registry_domain }}"
-      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/fullchain1.pem
-      REGISTRY_HTTP_TLS_KEY: /certs/privkey1.pem
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/live/{{ registry_domain }}/fullchain.pem
+      REGISTRY_HTTP_TLS_KEY: /certs/live/{{ registry_domain }}/privkey.pem
     volumes:
     - /mnt:/var/lib/registry
     - /etc/dockerregistry/auth:/auth
-    - /etc/letsencrypt/archive/{{ registry_domain }}:/certs
+    - /etc/letsencrypt:/certs

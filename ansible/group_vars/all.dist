@@ -1,3 +1,6 @@
 letsencrypt_mail: me@example.com
 registry_domain: my.registry.example.com
+registry_user: myloginatmyregistry
+
+# The password for registry access can be created with 'htpasswd -nB yourusername'
 registry_password: hash_of_your_htpasswd_password
