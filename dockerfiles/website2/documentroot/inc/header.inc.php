@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>First Website</title>
+  <title>Second Website</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -35,34 +35,7 @@
   <div class="container">
     <div class="row">
       <div class="twelve columns" style="margin-bottom:50px; margin-top:30px;">
-        <h1>Website Numero Uno</h1>
+        <h1>Second Website! Same Content, but better!</h1>
       </div>
     </div>
 
-    <div class="row" style="margin-bottom:50px">
-      <div class="twelve columns">
-        <h3>Some interessting content goes here!</a></h3>
-        <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-        commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
-        et magnis dis parturient montes, nascetur ridiculus mus. Donec quam
-        felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla
-        consequat massa quis enim. Donec pede justo, fringilla vel, aliquet
-        nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a,
-        venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
-        Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean
-        vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-        vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, 
-        </p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="twelve columns" style="margin-bottom:50px; margin-top:30px;">
-		<hr />
-      </div>
-    </div>
-  </div>
-
-</body>
-</html>
